@@ -28,7 +28,7 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
     - name: Test
-      run: dotnet test --no-build --verbosity normal --logger "trx;LogFileName=test-results.trx" --filter "TestCategory=ContinuousIntegration"
+      run: dotnet test --no-build --verbosity normal --logger "trx;LogFileName=test-results.trx" --results-directory ./TestResults --filter "TestCategory=ContinuousIntegration"
       
     - name: TestReport
       uses: dorny/test-reporter@v2
