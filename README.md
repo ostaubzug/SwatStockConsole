@@ -5,5 +5,8 @@
 ## Git
 Wir nutzen den main und develop branch.
 
-## Testing
-You can see the Testresults in directly in the Test Workflow linked in the badge above.
+## Pipelines
+
+### Build Pipeline
+The build Pipeline generates a summary about the tests that have been run.
+![TestSummary](Images/TestSummary.png)
