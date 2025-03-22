@@ -50,8 +50,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          dotnet sonarscanner begin /k:"YOUR_PROJECT_KEY" \
-          /o:"YOUR_ORGANIZATION" \
+          dotnet sonarscanner begin /k:"ostaubzug_SwatStockConsole" \
+          /o:"ostaubzug" \
           /d:sonar.host.url="https://sonarcloud.io" \
           /d:sonar.token="${{ secrets.SONAR_TOKEN }}" \
           /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml \
