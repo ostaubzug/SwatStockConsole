@@ -12,6 +12,8 @@ public class UnitTest1
         Assert.IsTrue(true);
     }
 
+    [TestMethod]
+    [TestCategory("ContinuousIntegration")]
     public void TestMethod2()
     {
         var api = new APIService();
