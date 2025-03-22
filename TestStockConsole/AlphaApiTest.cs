@@ -1,3 +1,5 @@
+using StockConsole;
+
 namespace TestStockConsole;
 
 [TestClass]
@@ -33,6 +35,16 @@ public class AlphaApiTest
     
         Assert.IsTrue(content.Contains("Global Quote"), "Response doesn't contain expected data");
         Console.WriteLine($"API Response: {content}");
+    }
+    
+    [TestCategory("ContinuousIntegration")]
+    [TestMethod]
+    public async Task TestGetPrice()
+    {
+        var service = new APIService();
+        var price = await service.GetLastPrice("AAPL");
+        Assert.IsNotNull(price);
+        Console.WriteLine(price);
     }
     
     

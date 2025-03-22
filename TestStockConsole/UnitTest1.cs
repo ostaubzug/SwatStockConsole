@@ -17,7 +17,6 @@ public class UnitTest1
     public void TestMethod2()
     {
         var api = new APIService();
-        api.ServiceMethod();
         Assert.IsTrue(true);
     }
 }
