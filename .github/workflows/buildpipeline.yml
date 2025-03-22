@@ -25,12 +25,12 @@ jobs:
       - name: Build
         run: dotnet build --no-restore
       - name: Test with coverage
-        run: dotnet test --no-build --verbosity normal --logger "trx;LogFileName=test-results.trx" --results-directory ./TestResults --filter "TestCategory=ContinuousIntegration" /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=./TestResults/coverage/
+        run: dotnet test --no-build --verbosity normal --logger "trx;LogFileName=test-results.trx" --results-directory ./TestResults --filter "TestCategory=ContinuousIntegration" /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=./TestResults/
 
       - name: Generate coverage report
         uses: danielpalme/ReportGenerator-GitHub-Action@5.4.4
         with:
-          reports: '**/coverage.cobertura.xml'
+          reports: './TestResults/coverage.cobertura.xml'
           targetdir: 'coveragereport'
           reporttypes: 'HtmlInline;Cobertura'
 
@@ -54,7 +54,7 @@ jobs:
         with:
           label: Coverage
           color: brightgreen
-          path: '**/coverage.cobertura.xml'
+          path: './TestResults/coverage.cobertura.xml'
           gist-filename: code-coverage.json
           gist-id: ${{ secrets.GIST_ID }}
           gist-auth-token: ${{ secrets.GIST_TOKEN }}
