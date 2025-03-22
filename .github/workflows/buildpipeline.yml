@@ -20,9 +20,12 @@ jobs:
         run: dotnet restore
       - name: Build
         run: dotnet build --no-restore
+        env:
+          YAHOO_FINANCE_API_KEY: ${{ secrets.ALPHA_API_KEY }}
       - name: Test
-        run: dotnet test --no-build --verbosity normal --logger "trx;LogFileName=test-results.trx" --results-directory ./TestResults --filter "TestCategory=ContinuousIntegration" 
-
+        run: dotnet test --no-build --verbosity normal --logger "trx;LogFileName=test-results.trx" --results-directory ./TestResults --filter "TestCategory=ContinuousIntegration"
+        env:
+          YAHOO_FINANCE_API_KEY: ${{ secrets.ALPHA_API_KEY }}
       - name: TestReport
         uses: dorny/test-reporter@v2
         if: success() || failure()
