@@ -1,5 +1,5 @@
 # Swat Project
-[![.NET](https://github.com/ostaubzug/SwatStockConsole/actions/workflows/dotnet.yml/badge.svg)](https://github.com/ostaubzug/SwatStockConsole/actions/workflows/buildpipeline.yml)
+[![.NET](https://github.com/ostaubzug/SwatStockConsole/actions/workflows/buildpipeline.yml/badge.svg)](https://github.com/ostaubzug/SwatStockConsole/actions/workflows/buildpipeline.yml)
 
 ## Git
 Wir nutzen den main und develop branch.
