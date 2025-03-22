@@ -27,12 +27,6 @@ jobs:
       - name: Test with coverage
         run: dotnet test --no-build --verbosity normal --logger "trx;LogFileName=test-results.trx" --results-directory ./TestResults --filter "TestCategory=ContinuousIntegration" /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura
 
-      # Debug step to find the coverage file
-      - name: Find coverage file
-        run: |
-          find . -name "*.cobertura.xml"
-          ls -la ./TestResults
-
       - name: Generate coverage report
         uses: danielpalme/ReportGenerator-GitHub-Action@5.4.4
         with:
@@ -60,7 +54,7 @@ jobs:
         with:
           label: Coverage
           color: brightgreen
-          path: '**/coverage.cobertura.xml'
+          path: './TestStockConsole/coverage.cobertura.xml'
           gist-filename: code-coverage.json
           gist-id: ${{ secrets.GIST_ID }}
           gist-auth-token: ${{ secrets.GIST_TOKEN }}
