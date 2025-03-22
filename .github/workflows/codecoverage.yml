@@ -27,12 +27,12 @@ jobs:
       - name: Build
         run: dotnet build --no-restore
         env:
-          ALPHA_FINANCE_API_KEY: ${{ secrets.ALPHA_API_KEY }}
+          ALPHA_API_KEY: ${{ secrets.ALPHA_API_KEY }}
           
       - name: Test with coverage
         run: dotnet test --no-build --verbosity normal --filter "TestCategory=ContinuousIntegration" /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
         env:
-          ALPHA_FINANCE_API_KEY: ${{ secrets.ALPHA_API_KEY }}
+          ALPHA_API_KEY: ${{ secrets.ALPHA_API_KEY }}
           
       - name: Generate coverage report
         uses: danielpalme/ReportGenerator-GitHub-Action@5.4.4
