@@ -8,10 +8,13 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+permissions:
+  contents: read
+  actions: read
+  checks: write
 
 jobs:
-  build:
-
+  build-test:
     runs-on: ubuntu-latest
 
     steps:
@@ -26,3 +29,15 @@ jobs:
       run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal --filter "TestCategory=ContinuousIntegration"
+      
+    - name: TestReport
+      uses: dorny/test-reporter@v2
+      if: success() || failure()
+      with:
+        name: JEST Tests
+        path: ./TestResults/*.trx
+        reporter: dotnet-trx
+      
+      
+      
+
