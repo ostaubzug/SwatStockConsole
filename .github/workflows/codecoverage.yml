@@ -1,0 +1,52 @@
+name: .NET
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+permissions:
+  contents: read
+  actions: read
+  checks: write
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+      - name: Restore dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --no-restore
+      - name: Test with coverage
+        run: dotnet test --no-build --verbosity normal --filter "TestCategory=ContinuousIntegration" /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura
+
+      - name: Generate coverage report
+        uses: danielpalme/ReportGenerator-GitHub-Action@5.4.4
+        with:
+          reports: '**/coverage.cobertura.xml'
+          targetdir: 'coveragereport'
+          reporttypes: 'HtmlInline;Cobertura'
+
+      - name: Upload coverage report artifact
+        uses: actions/upload-artifact@v4.6.2
+        with:
+          name: CoverageReport
+          path: coveragereport
+
+      - name: Create Coverage Badge
+        uses: simon-k/dotnet-code-coverage-badge@v1.0.0
+        id: coverage-badge
+        with:
+          label: Coverage
+          color: brightgreen
+          path: './TestStockConsole/coverage.cobertura.xml'
+          gist-filename: code-coverage.json
+          gist-id: ${{ secrets.GIST_ID }}
+          gist-auth-token: ${{ secrets.GIST_TOKEN }}
