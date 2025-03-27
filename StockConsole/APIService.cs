@@ -2,22 +2,31 @@ using System.Text.Json;
 
 namespace StockConsole;
 
-public class APIService
+public class ApiService
 {
     private string _apiKey;
-    public APIService()
+    private string _apiUrl;
+    private readonly HttpClient _client;
+    
+    public ApiService(HttpClient client)
+    {
+        _client = client;
+        LoadEnvVariables();
+    }
+
+    private void LoadEnvVariables()
     {
         DotNetEnv.Env.Load();
-        _apiKey = Environment.GetEnvironmentVariable("ALPHA_API_KEY") ?? throw new ArgumentException();
+        _apiKey = Environment.GetEnvironmentVariable("ALPHA_API_KEY") ?? throw new ArgumentException("Api Key not found");
+        _apiUrl = Environment.GetEnvironmentVariable("ALPHA_API_URL") ?? throw new ArgumentException("Api url not found");
     }
-    
-    public async Task<decimal> GetLastPrice(string symbol)
-    {
-        string url = $"https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol={symbol}&apikey={_apiKey}";
 
-        using HttpClient client = new HttpClient();
+    public async Task<decimal> GetMostRecentPrice(string symbol)
+    {
+        //todo dependency injection für tests vom client / reuse
+        string urlWithSymbol = _apiUrl.Replace("{symbol}", symbol).Replace("{_apiKey}", _apiKey!);
         
-        HttpResponseMessage response = await client.GetAsync(url);
+        HttpResponseMessage response = await _client.GetAsync(urlWithSymbol);
         var json = await response.Content.ReadAsStringAsync();
         var price = GetPriceProperty(json);
         return decimal.Parse(price);

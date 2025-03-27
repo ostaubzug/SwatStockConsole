@@ -6,11 +6,11 @@ namespace StockConsole
     {
         static async Task Main(string[] args)
         {
-            var service = new APIService();
+            var service = new ApiService(new HttpClient());
             Console.WriteLine("Which stock do you want to know the price of?");
 
             string stockSymbol = Console.ReadLine();
-            var price = await service.GetLastPrice(stockSymbol);
+            var price = await service.GetMostRecentPrice(stockSymbol);
 
             Console.WriteLine($"The last price is {price}");
         }

@@ -7,6 +7,7 @@
 ## Setup
 In both Projects create a .env File with this content:
 ALPHA_API_KEY=your-alpha-vantage-key
+ALPHA_API_URL=https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol={symbol}&apikey={_apiKey}
 
 https://www.alphavantage.co/support/#api-key
 
