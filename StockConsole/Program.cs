@@ -7,6 +7,7 @@ namespace StockConsole
     {
         public static void Main(string[] args)
         {
+            DotNetEnv.Env.Load();
             var configuration = new ConfigurationBuilder()
                 .AddEnvironmentVariables()
                 .Build();
@@ -15,6 +16,7 @@ namespace StockConsole
             services.AddHttpClient();
             services.AddSingleton<IConfiguration>(configuration);
             services.AddSingleton<IAlphaVantageApiService, AlphaVantageApiService>();
+            services.AddSingleton<IChartService, ChartService>();
             
             var serviceProvider = services.BuildServiceProvider();
             Client.StartConsoleApplication(serviceProvider);

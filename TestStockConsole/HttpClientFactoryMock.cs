@@ -10,6 +10,11 @@ namespace TestStockConsole
         
         public static IHttpClientFactory CreateMockFactory(string jsonResponse)
         {
+            return CreateMockFactory(request => jsonResponse);
+        }
+
+        public static IHttpClientFactory CreateMockFactory(Func<HttpRequestMessage, string> responseProvider)
+        {
             ReceivedRequests.Clear();
             
             var handlerMock = new Mock<HttpMessageHandler>();
@@ -37,10 +42,10 @@ namespace TestStockConsole
                         Console.WriteLine($"Header: {header.Key} = {string.Join(", ", header.Value)}");
                     }
                 })
-                .ReturnsAsync(new HttpResponseMessage
+                .ReturnsAsync((HttpRequestMessage request, CancellationToken _) => new HttpResponseMessage
                 {
                     StatusCode = HttpStatusCode.OK,
-                    Content = new StringContent(jsonResponse)
+                    Content = new StringContent(responseProvider(request))
                 });
 
             var httpClient = new HttpClient(handlerMock.Object);

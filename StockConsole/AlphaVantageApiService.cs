@@ -2,30 +2,32 @@ using Microsoft.Extensions.Configuration;
 
 namespace StockConsole;
 
-public class AlphaVantageApiService : IAlphaVantageApiService
+public class AlphaVantageApiService(IHttpClientFactory clientFactory, IConfiguration configuration)
+    : IAlphaVantageApiService
 {
-    private readonly string _apiKey;
-    private readonly string _apiUrl;
-    private readonly IHttpClientFactory _httpClientFactory;
+    private readonly string _apiKey = configuration["ALPHA_API_KEY"] ?? throw new ArgumentException("Api Key not found");
+    private readonly string _apiUrl = configuration["ALPHA_API_URL"] ?? throw new ArgumentException("Api url not found");
 
-    public AlphaVantageApiService(IHttpClientFactory clientFactory, IConfiguration configuration)
-    {
-        DotNetEnv.Env.Load();
-        _apiKey = configuration["ALPHA_API_KEY"] ?? throw new ArgumentException("Api Key not found");
-        _apiUrl = configuration["ALPHA_API_URL"] ?? throw new ArgumentException("Api url not found");
-        _httpClientFactory = clientFactory;
-    }
-    
     public async Task<decimal> GetMostRecentPrice(string symbol)
     {
-        var json = await FetchApi(_apiUrl, _apiKey, symbol);
+        var json = await FetchApi(_apiUrl,"GLOBAL_QUOTE", _apiKey, symbol);
         return JsonUtility.ExtractLatestPrice(json);
     }
     
-    private async Task<string> FetchApi(string url, string apiKey, string symbol)
+    public async Task<List<DailyPriceData>> GetTimeSeries(string symbol, int days)
     {
-        var requestUrl = url.Replace("{symbol}", symbol).Replace("{_apiKey}", apiKey);
-        var client = _httpClientFactory.CreateClient("AlphaVantage");
+        var json = await FetchApi(_apiUrl,"TIME_SERIES_DAILY", _apiKey, symbol);
+        return JsonUtility.ExtractAllPricesLastXDays(json,days);
+    }
+
+    private async Task<string> FetchApi(string url, string function, string apiKey, string symbol)
+    {
+        var requestUrl = url
+            .Replace("{function}", function)
+            .Replace("{symbol}", symbol)
+            .Replace("{apiKey}", apiKey);
+            
+        var client = clientFactory.CreateClient("AlphaVantage");
         return await client.GetStringAsync(requestUrl);
     }
 }
