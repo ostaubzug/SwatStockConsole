@@ -1,4 +1,5 @@
 using JetBrains.Annotations;
+using Microsoft.Extensions.Configuration;
 using StockConsole;
 
 namespace TestStockConsole;
@@ -7,7 +8,7 @@ namespace TestStockConsole;
 [TestSubject(typeof(IAlphaVantageApiService))]
 public class AlphaVantageApiServiceTest
 {
-    private readonly string _validJson = @"{
+    private const string ValidJson = @"{
             ""Global Quote"": {
                 ""01. symbol"": ""AAPL"",
                 ""02. open"": ""223.5100"",
@@ -21,16 +22,24 @@ public class AlphaVantageApiServiceTest
                 ""10. change percent"": ""-0.9922%""
             }
         }";
+    
+    private static readonly Dictionary<string, string> ConfigurationValues = new Dictionary<string, string>
+    {
+        {"ALPHA_API_KEY", "test-api-key"},
+        {"ALPHA_API_URL", "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol={symbol}&apikey={_apiKey}"}
+    };
+    private static readonly IConfiguration Configuration = new ConfigurationBuilder()
+        .AddInMemoryCollection(ConfigurationValues!)
+        .Build();
+    private readonly IHttpClientFactory _mockFactory = HttpClientFactoryMock.CreateMockFactory(ValidJson);
+    
 
     [TestMethod]
     [TestCategory("ContinuousIntegration")]
     public async Task GetMostRecentPrice_ReturnsCorrectPrice()
     {
-        var mockFactory = HttpClientFactoryMock.CreateMockFactory(_validJson);
-        var service = new AlphaVantageApiService(mockFactory);
-
+        var service = new AlphaVantageApiService(_mockFactory, Configuration);
         var price = await service.GetMostRecentPrice("AAPL");
-
         Assert.AreEqual(221.53m, price);
         
     }
@@ -39,8 +48,7 @@ public class AlphaVantageApiServiceTest
     [TestCategory("ContinuousIntegration")]
     public async Task GetMostRecentPrice_CheckSentRequest()
     {
-        var mockFactory = HttpClientFactoryMock.CreateMockFactory(_validJson);
-        var service = new AlphaVantageApiService(mockFactory);
+        var service = new AlphaVantageApiService(_mockFactory,Configuration);
         await service.GetMostRecentPrice("AAPL");
         
         var request = HttpClientFactoryMock.ReceivedRequests[0];

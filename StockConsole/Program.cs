@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace StockConsole
 {
@@ -6,8 +7,13 @@ namespace StockConsole
     {
         public static void Main(string[] args)
         {
+            var configuration = new ConfigurationBuilder()
+                .AddEnvironmentVariables()
+                .Build();
+            
             var services = new ServiceCollection();
             services.AddHttpClient();
+            services.AddSingleton<IConfiguration>(configuration);
             services.AddSingleton<IAlphaVantageApiService, AlphaVantageApiService>();
             
             var serviceProvider = services.BuildServiceProvider();

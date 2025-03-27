@@ -1,3 +1,5 @@
+using Microsoft.Extensions.Configuration;
+
 namespace StockConsole;
 
 public class AlphaVantageApiService : IAlphaVantageApiService
@@ -6,11 +8,11 @@ public class AlphaVantageApiService : IAlphaVantageApiService
     private readonly string _apiUrl;
     private readonly IHttpClientFactory _httpClientFactory;
 
-    public AlphaVantageApiService(IHttpClientFactory clientFactory)
+    public AlphaVantageApiService(IHttpClientFactory clientFactory, IConfiguration configuration)
     {
         DotNetEnv.Env.Load();
-        _apiKey = Environment.GetEnvironmentVariable("ALPHA_API_KEY") ?? throw new ArgumentException("Api Key not found");
-        _apiUrl = Environment.GetEnvironmentVariable("ALPHA_API_URL") ?? throw new ArgumentException("Api url not found");
+        _apiKey = configuration["ALPHA_API_KEY"] ?? throw new ArgumentException("Api Key not found");
+        _apiUrl = configuration["ALPHA_API_URL"] ?? throw new ArgumentException("Api url not found");
         _httpClientFactory = clientFactory;
     }
     
