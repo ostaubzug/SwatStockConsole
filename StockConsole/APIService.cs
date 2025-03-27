@@ -2,8 +2,8 @@ namespace StockConsole;
 
 public class ApiService
 {
-    private string _apiKey;
-    private string _apiUrl;
+    private string _apiKey = string.Empty;
+    private string _apiUrl = string.Empty;
     private readonly HttpClient _httpClient;
     
     public ApiService(HttpClient httpClient)
