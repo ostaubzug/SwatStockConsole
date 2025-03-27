@@ -4,7 +4,7 @@ namespace StockConsole;
 
 public static class JsonUtility
 {
-    public static decimal ExtractMostRecentPrice(string json)
+    public static decimal ExtractLatestPrice(string json)
     {
         using JsonDocument document = JsonDocument.Parse(json);
         

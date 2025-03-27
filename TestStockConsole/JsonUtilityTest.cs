@@ -27,7 +27,7 @@ public class JsonUtilityTest
             }
         }";
         
-        decimal price = JsonUtility.ExtractMostRecentPrice(validJson);
+        decimal price = JsonUtility.ExtractLatestPrice(validJson);
         
         Assert.AreEqual(221.53m, price);
     }
@@ -40,7 +40,7 @@ public class JsonUtilityTest
         string invalidJson = @"{
             ""WrongProperty"": {}
         }";
-        JsonUtility.ExtractMostRecentPrice(invalidJson);
+        JsonUtility.ExtractLatestPrice(invalidJson);
     }
     
     [TestCategory("ContinuousIntegration")]
@@ -55,6 +55,6 @@ public class JsonUtilityTest
                 ""missing price property"": ""value""
             }
         }";
-        JsonUtility.ExtractMostRecentPrice(invalidJson);
+        JsonUtility.ExtractLatestPrice(invalidJson);
     }
 }
