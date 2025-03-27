@@ -39,7 +39,7 @@ jobs:
       - name: Generate coverage report
         uses: danielpalme/ReportGenerator-GitHub-Action@5.4.4
         with:
-          reports: '**/coverage/coverage.opencover.xml'
+          reports: '**/coverage.opencover.xml'
           targetdir: 'coveragereport'
           reporttypes: 'HtmlInline;Cobertura'
 
@@ -55,7 +55,7 @@ jobs:
         with:
           label: Coverage
           color: brightgreen
-          path: './TestStockConsole/coverage/coverage.opencover.xml'
+          path: './TestStockConsole/coverage.opencover.xml'
           gist-filename: code-coverage.json
           gist-id: ${{ secrets.GIST_ID }}
           gist-auth-token: ${{ secrets.GIST_TOKEN }}
