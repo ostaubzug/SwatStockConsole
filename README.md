@@ -5,7 +5,7 @@
 [![SonarCloud](https://sonarcloud.io/api/project_badges/measure?project=ostaubzug_SwatStockConsole&metric=alert_status)](https://sonarcloud.io/project/overview?id=ostaubzug_SwatStockConsole)
 
 ## Setup
-In both Projects create a .env File with this content:
+In the StockConsole Project create a .env File with this content:
 ALPHA_API_KEY=your-alpha-vantage-key
 ALPHA_API_URL=https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol={symbol}&apikey={_apiKey}
 
