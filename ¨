@@ -1,0 +1,14 @@
+refactor project structure
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch main
+# Your branch is up to date with 'origin/main'.
+#
+# Changes to be committed:
+#	renamed:    StockConsole/AlphaVantageApiService.cs -> StockConsole/Services/AlphaVantageApiService.cs
+#	renamed:    StockConsole/ChartService.cs -> StockConsole/Services/ChartService.cs
+#	renamed:    StockConsole/IAlphaVantageApiService.cs -> StockConsole/Services/IAlphaVantageApiService.cs
+#	renamed:    StockConsole/IChartService.cs -> StockConsole/Services/IChartService.cs
+#	renamed:    StockConsole/JsonUtility.cs -> StockConsole/Utility/JsonUtility.cs
+#
