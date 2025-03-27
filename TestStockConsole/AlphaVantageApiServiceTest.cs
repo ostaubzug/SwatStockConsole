@@ -56,4 +56,46 @@ public class AlphaVantageApiServiceTest
         Assert.IsTrue(HttpClientFactoryMock.ReceivedRequests.Count > 0, "No requests were captured");
         Assert.IsTrue(request.RequestUri != null && request.RequestUri.ToString().Contains("AAPL"), "Request URL should contain the symbol");
     }
+
+    [TestMethod]
+    [TestCategory("ContinuousIntegration")]
+    [ExpectedException(typeof(ArgumentException), "Api Key not found")]
+    public void Constructor_ThrowsException_WhenApiKeyMissing()
+    {
+        var emptyConfig = new ConfigurationBuilder()
+            .AddInMemoryCollection(new Dictionary<string, string>
+            {
+                {"ALPHA_API_URL", "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol={symbol}&apikey={_apiKey}"}
+            }!)
+            .Build();
+            
+        _ = new AlphaVantageApiService(_mockFactory, emptyConfig);
+    }
+    
+    [TestMethod]
+    [TestCategory("ContinuousIntegration")]
+    [ExpectedException(typeof(ArgumentException), "Api url not found")]
+    public void Constructor_ThrowsException_WhenApiUrlMissing()
+    {
+        var emptyConfig = new ConfigurationBuilder()
+            .AddInMemoryCollection(new Dictionary<string, string>
+            {
+                {"ALPHA_API_KEY", "test-api-key"}
+            }!)
+            .Build();
+            
+        _ = new AlphaVantageApiService(_mockFactory, emptyConfig);
+    }
+
+    [TestMethod]
+    [TestCategory("ContinuousIntegration")]
+    [ExpectedException(typeof(ArgumentException), "Api Key not found")]
+    public void Constructor_ThrowsException_WhenNoConfigValuesProvided()
+    {
+        var emptyConfig = new ConfigurationBuilder()
+            .AddInMemoryCollection(new Dictionary<string, string>()!)
+            .Build();
+            
+        _ = new AlphaVantageApiService(_mockFactory, emptyConfig);
+    }
 }

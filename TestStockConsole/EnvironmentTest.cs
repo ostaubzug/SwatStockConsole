@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Configuration;
 using StockConsole;
 
 namespace TestStockConsole;
@@ -5,21 +6,29 @@ namespace TestStockConsole;
 [TestClass]
 public class EnvironmentTest
 {
+    private static readonly Dictionary<string, string> ConfigurationValues = new Dictionary<string, string>
+    {
+        {"ALPHA_API_KEY", "test-api-key"},
+        {"ALPHA_API_URL", "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol={symbol}&apikey={_apiKey}"}
+    };
+    
+    private static readonly IConfiguration Configuration = new ConfigurationBuilder()
+        .AddInMemoryCollection(ConfigurationValues!)
+        .Build();
+    
     [TestCategory("ContinuousIntegration")]
     [TestMethod]
     public void TestEnvVariablesd()
     {
-        DotNetEnv.Env.Load();
-        var apiKey = Environment.GetEnvironmentVariable("ALPHA_API_KEY") ?? throw new ArgumentException("Api Key not found");
-        var apiUrl = Environment.GetEnvironmentVariable("ALPHA_API_URL") ?? throw new ArgumentException("Api url not found");
+        var apiKey = Configuration["ALPHA_API_KEY"] ?? throw new ArgumentException("Api Key not found");
+        var apiUrl = Configuration["ALPHA_API_URL"] ?? throw new ArgumentException("Api url not found");
     }
     
     [TestCategory("Manual")]
     [TestMethod]
     public async Task FetchApi()
     {
-        DotNetEnv.Env.Load();
-        var apiKey = Environment.GetEnvironmentVariable("ALPHA_API_KEY") ?? throw new ArgumentException("Api Key not found");
+        var apiKey = Configuration["ALPHA_API_KEY"] ?? throw new ArgumentException("Api Key not found");
         
         using var client = new HttpClient();
         string url = $"https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=AAPL&apikey={apiKey}";
@@ -30,5 +39,4 @@ public class EnvironmentTest
         Console.WriteLine($"API Response: {content}");
         Assert.IsTrue(content.Contains("Global Quote"), "Response doesn't contain expected data");
     }
-    
 }
