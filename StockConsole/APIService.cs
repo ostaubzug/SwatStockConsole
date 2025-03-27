@@ -23,14 +23,7 @@ public class ApiService
     public async Task<decimal> GetMostRecentPrice(string symbol)
     {
         var requestUrl = _apiUrl.Replace("{symbol}", symbol).Replace("{_apiKey}", _apiKey!);
-        var json = FetchStockPriceData(requestUrl);
-        return JsonUtility.ExtractMostRecentPrice(await json);
-
-    }
-
-    private async Task<string> FetchStockPriceData(string url)
-    {
-        HttpResponseMessage response = await _httpClient.GetAsync(url);
-        return await response.Content.ReadAsStringAsync();
+        var json = await _httpClient.GetStringAsync(requestUrl);
+        return JsonUtility.ExtractMostRecentPrice(json);
     }
 }

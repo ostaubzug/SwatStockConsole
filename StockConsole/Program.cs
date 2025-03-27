@@ -6,7 +6,8 @@ namespace StockConsole
     {
         static async Task Main(string[] args)
         {
-            var service = new ApiService(new HttpClient());
+            using var httpClient = new HttpClient();
+            var service = new ApiService(httpClient);
             Console.WriteLine("Which stock do you want to know the price of?");
 
             string stockSymbol = Console.ReadLine()!;
