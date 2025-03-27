@@ -32,9 +32,6 @@ jobs:
           
       - name: Test with coverage
         run: dotnet test --no-build --verbosity normal --filter "TestCategory=ContinuousIntegration" /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
-        env:
-          ALPHA_API_KEY: ${{ secrets.ALPHA_API_KEY }}
-          ALPHA_API_URL: ${{ secrets.ALPHA_API_URL }}
           
       - name: Generate coverage report
         uses: danielpalme/ReportGenerator-GitHub-Action@5.4.4

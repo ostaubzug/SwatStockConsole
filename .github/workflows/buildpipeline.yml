@@ -25,9 +25,6 @@ jobs:
           ALPHA_API_URL: ${{ secrets.ALPHA_API_URL }}
       - name: Test
         run: dotnet test --no-build --verbosity normal --logger "trx;LogFileName=test-results.trx" --results-directory ./TestResults --filter "TestCategory=ContinuousIntegration"
-        env:
-          ALPHA_API_KEY: ${{ secrets.ALPHA_API_KEY }}
-          ALPHA_API_URL: ${{ secrets.ALPHA_API_URL }}
           
       - name: TestReport
         uses: dorny/test-reporter@v2
