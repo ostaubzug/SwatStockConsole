@@ -6,10 +6,13 @@
 
 ## Setup
 In the StockConsole Project create a .env File with this content:
-ALPHA_API_KEY=your-alpha-vantage-key
-ALPHA_API_URL=https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol={symbol}&apikey={_apiKey}
 
-https://www.alphavantage.co/support/#api-key
+```
+ALPHA_API_KEY=your-alpha-vantage-key
+ALPHA_API_URL=https://www.alphavantage.co/query?function={function}&symbol={symbol}&apikey={apiKey}
+```
+
+You can get your API Key here: https://www.alphavantage.co/support/#api-key
 
 Make sure the file is getting copied to the output directory.
 
