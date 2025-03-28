@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using Microsoft.Extensions.Configuration;
-using StockConsole;
+using StockConsole.Model;
+using StockConsole.Services;
 
 namespace TestStockConsole;
 

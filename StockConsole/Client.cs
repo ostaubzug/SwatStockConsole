@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using StockConsole.Services;
 
 namespace StockConsole;
 

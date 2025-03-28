@@ -1,4 +1,6 @@
-namespace StockConsole;
+using StockConsole.Model;
+
+namespace StockConsole.Services;
 
 public interface IAlphaVantageApiService
 {

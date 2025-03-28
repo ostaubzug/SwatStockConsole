@@ -1,6 +1,8 @@
 using Microsoft.Extensions.Configuration;
+using StockConsole.Model;
+using StockConsole.Utility;
 
-namespace StockConsole;
+namespace StockConsole.Services;
 
 public class AlphaVantageApiService(IHttpClientFactory clientFactory, IConfiguration configuration)
     : IAlphaVantageApiService
