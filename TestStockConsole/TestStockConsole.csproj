@@ -33,4 +33,10 @@
       <ProjectReference Include="..\StockConsole\StockConsole.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Update="ServicesTest\chart.txt">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>
