@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using StockConsole;
@@ -7,6 +8,7 @@ using StockConsole.Services;
 namespace TestStockConsole;
 
 [TestClass]
+[TestSubject(typeof(Client))]
 public class ClientTest
 {
     private Mock<IAlphaVantageApiService>? _mockStockPriceService;
@@ -26,6 +28,7 @@ public class ClientTest
     }
 
     [TestMethod]
+    [TestCategory("ContinuousIntegration")]
     public void StartConsoleApplication_WithValidInput_DisplaysCorrectOutput()
     {
         const string testSymbol = "AAPL";
