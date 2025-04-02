@@ -3,7 +3,7 @@ using StockConsole.Services;
 using StockConsole.Utility;
 using TestStockConsole.TestData;
 
-namespace TestStockConsole;
+namespace TestStockConsole.ServicesTest;
 
 [TestClass]
 [TestSubject(typeof(ChartService))]
@@ -17,7 +17,7 @@ public class ChartServiceTest
         var service = new ChartService();
         var priceData = JsonUtility.ExtractAllPricesLastXDays(ApiData.ValidTimeSeriesJson, 7);
         var result = service.RenderCandlestickChart(priceData);
-        Assert.AreEqual(File.ReadAllText("chart.txt"),result);
+        Assert.AreEqual(File.ReadAllText("ServicesTest/chart.txt"),result);
     }
     
 }
