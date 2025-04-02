@@ -22,6 +22,7 @@ public class EnvironmentTest
     {
         var apiKey = Configuration["ALPHA_API_KEY"] ?? throw new ArgumentException("Api Key not found");
         var apiUrl = Configuration["ALPHA_API_URL"] ?? throw new ArgumentException("Api url not found");
+        Assert.IsNotNull(apiKey, apiUrl);
     }
     
     [TestCategory("Manual")]
