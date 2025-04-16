@@ -4,7 +4,7 @@ using StockConsole.Model;
 using StockConsole.Services;
 using TestStockConsole.TestData;
 
-namespace TestStockConsole;
+namespace TestStockConsole.ServicesTest;
 
 
 [TestClass]

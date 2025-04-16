@@ -25,4 +25,5 @@ public static class Client
         var chart = chartService.RenderCandlestickChart(timeSeries);
         Console.WriteLine(chart);
     }
+    
 }

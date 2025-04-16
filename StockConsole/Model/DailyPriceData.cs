@@ -1,6 +1,6 @@
 namespace StockConsole.Model;
 
-public class DailyPriceData
+public record DailyPriceData
 {
     public decimal Open { get; set; }
     public decimal High { get; set; }
