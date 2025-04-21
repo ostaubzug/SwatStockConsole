@@ -4,6 +4,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockConsole", "StockConsol
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestStockConsole", "TestStockConsole\TestStockConsole.csproj", "{A54DEE02-BD45-4F45-93D9-F3AED8E29413}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BDFB508A-7E30-4CF5-AE82-DBDE60802AFB}"
+	ProjectSection(SolutionItems) = preProject
+		compose.yaml = compose.yaml
+		promtail-config.yml = promtail-config.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

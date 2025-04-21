@@ -1,5 +1,8 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Serilog;
 using StockConsole.Services;
 
 namespace StockConsole
@@ -8,6 +11,11 @@ namespace StockConsole
     {
         public static void Main(string[] args)
         {
+            
+            var logger = new LoggerConfiguration().WriteTo.File("/var/logs/stockconsole.log").CreateLogger();
+            
+            CreateHostBuilder(args, logger).Build().Run();
+            
             DotNetEnv.Env.Load();
             var configuration = new ConfigurationBuilder()
                 .AddEnvironmentVariables()
@@ -23,6 +31,14 @@ namespace StockConsole
             Client.StartConsoleApplication(serviceProvider);
             
         }
+        
+        public static IHostBuilder CreateHostBuilder(string[] args, ILogger logger) =>
+            Host.CreateDefaultBuilder(args)
+                .UseSerilog(logger)
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseStartup<StartupBase>();
+                });
 
       
     }
