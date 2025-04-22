@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using StockConsole.Services;
@@ -11,35 +9,29 @@ namespace StockConsole
     {
         public static void Main(string[] args)
         {
-            
-            var logger = new LoggerConfiguration().WriteTo.File("/var/logs/stockconsole.log").CreateLogger();
-            
-            CreateHostBuilder(args, logger).Build().Run();
-            
+            // Load environment variables first
             DotNetEnv.Env.Load();
-            var configuration = new ConfigurationBuilder()
-                .AddEnvironmentVariables()
-                .Build();
             
-            var services = new ServiceCollection();
-            services.AddHttpClient();
-            services.AddSingleton<IConfiguration>(configuration);
-            services.AddSingleton<IAlphaVantageApiService, AlphaVantageApiService>();
-            services.AddSingleton<IChartService, ChartService>();
+            // Configure and build the host
+            using IHost host = CreateHostBuilder(args).Build();
             
-            var serviceProvider = services.BuildServiceProvider();
-            Client.StartConsoleApplication(serviceProvider);
-            
+            // Run your console application logic
+            using var scope = host.Services.CreateScope();
+            var services = scope.ServiceProvider;
+            Client.StartConsoleApplication(services);
         }
-        
-        public static IHostBuilder CreateHostBuilder(string[] args, ILogger logger) =>
-            Host.CreateDefaultBuilder(args)
-                .UseSerilog(logger)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<StartupBase>();
-                });
 
-      
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .UseSerilog((context, services, loggerConfiguration) => 
+                {
+                    loggerConfiguration.WriteTo.File("/var/logs/stockconsole.log");
+                })
+                .ConfigureServices((hostContext, services) =>
+                {
+                    services.AddHttpClient();
+                    services.AddSingleton<IAlphaVantageApiService, AlphaVantageApiService>();
+                    services.AddSingleton<IChartService, ChartService>();
+                });
     }
 }

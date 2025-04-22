@@ -5,7 +5,7 @@ namespace StockConsole;
 
 public static class Client
 {
-    public static void StartConsoleApplication(ServiceProvider serviceProvider)
+    public static void StartConsoleApplication(IServiceProvider serviceProvider)
     {
         var stockPriceService = serviceProvider.GetRequiredService<IAlphaVantageApiService>();
         var chartService = serviceProvider.GetRequiredService<IChartService>();
