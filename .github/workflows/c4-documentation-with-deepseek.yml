@@ -38,7 +38,7 @@ jobs:
 
       - name: Generate code context for LLM
         run: |
-          npx code-context-llm --include "StockConsole/**/*.cs" --exclude "**/bin/**,**/obj/**" --output code-context.json
+          npx code-context-llm
           echo "Code context generated"
 
       - name: Create C4 diagrams directory
