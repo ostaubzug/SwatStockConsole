@@ -382,9 +382,16 @@ jobs:
           ls -la docs/c4/diagrams/
           cat docs/c4/c4_documentation.adoc
 
+      - name: Add C4 PlantUML includes to diagram files
+        run: |
+          for file in docs/c4/diagrams/*.puml; do
+            # Add includes at the beginning of the file after @startuml
+            sed -i '/@startuml/a !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml\n!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml' "$file"
+          done
+
       - name: Generate HTML documentation
         run: |
-          asciidoctor -r asciidoctor-diagram -D docs/c4/html docs/c4/c4_documentation.adoc
+          asciidoctor -r asciidoctor-diagram -a diagram-cachedir=.asciidoctor/diagram/cache -a plantuml-timeout=30 -D docs/c4/html docs/c4/c4_documentation.adoc
           echo "HTML documentation generated"
 
       - name: Verify documentation files
