@@ -362,7 +362,7 @@ jobs:
             asciidocContent += "- DailyPriceData: Data model for daily stock price information\n\n";
           
             asciidocContent += "== Maintenance\n\n";
-            asciidocContent += "This documentation is automatically generated from the codebase and updated on every commit.\n";
+            asciidocContent += "This documentation is automatically generated from the codebase.\n";
             asciidocContent += "The diagrams are created using DeepSeek AI to analyze the code structure.\n\n";
           
             asciidocContent += "Last generated: " + new Date().toISOString();
@@ -387,6 +387,18 @@ jobs:
           asciidoctor -r asciidoctor-diagram -D docs/c4/html docs/c4/c4_documentation.adoc
           echo "HTML documentation generated"
 
+      - name: Verify documentation files
+        run: |
+          echo "Checking for documentation files..."
+          ls -la docs/c4/diagrams/
+          ls -la docs/c4/
+          ls -la docs/c4/html/
+    
+      - name: Cleanup temporary files
+        run: |
+          rm -rf temp_processing
+          rm -f temp_project_structure.md
+
       - name: Create branch for documentation update
         id: create-branch
         run: |
@@ -399,9 +411,7 @@ jobs:
       - name: Commit documentation changes
         id: commit
         run: |
-          # Only add the docs directory, not the temporary files
           git add docs/c4/
-          # Only commit if there are changes
           if git diff --staged --quiet; then
             echo "No changes to commit"
             echo "has_changes=false" >> $GITHUB_OUTPUT
@@ -424,17 +434,12 @@ jobs:
           title: "Update C4 documentation"
           body: |
             This PR updates the C4 architecture documentation based on recent code changes.
-            
+    
             The documentation was automatically generated using DeepSeek AI to analyze the codebase structure.
-            
+    
             ## Changes
             - Updated System Context diagram
             - Updated Container diagram
             - Updated Component diagram
             - Generated AsciiDoc and HTML documentation
 
-      - name: Cleanup temporary files
-        if: always()
-        run: |
-          rm -rf temp_processing
-          rm -f temp_project_structure.md

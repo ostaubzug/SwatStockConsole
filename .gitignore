@@ -6,6 +6,10 @@
 # dotenv files
 .env
 
+
+temp_processing/
+temp_project_structure.md
+
 # User-specific files
 *.rsuser
 *.suo
