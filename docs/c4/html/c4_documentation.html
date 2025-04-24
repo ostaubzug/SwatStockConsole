@@ -477,7 +477,7 @@ The diagrams are automatically generated based on code analysis using DeepSeek A
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="c4-context-diagram.svg" alt="c4 context diagram" width="263" height="573">
+<img src="c4-context-diagram.svg" alt="c4 context diagram" width="263" height="576">
 </div>
 </div>
 </div>
@@ -488,7 +488,7 @@ The diagrams are automatically generated based on code analysis using DeepSeek A
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="c4-container-diagram.svg" alt="c4 container diagram" width="708" height="645">
+<img src="c4-container-diagram.svg" alt="c4 container diagram" width="721" height="787">
 </div>
 </div>
 </div>
@@ -497,9 +497,64 @@ The diagrams are automatically generated based on code analysis using DeepSeek A
 <div class="paragraph">
 <p>The Component diagram shows the internal components of the SwatStockConsole application.</p>
 </div>
-<div class="imageblock">
+<div class="listingblock">
 <div class="content">
-<img src="c4-component-diagram.svg" alt="c4 component diagram" width="771" height="643">
+<pre>Failed to generate image: PlantUML preprocessing failed: [From &lt;input&gt; (line 13) ]
+
+@startuml
+
+
+
+
+...
+... ( skipping 1644 lines )
+...
+
+
+
+
+
+
+
+
+
+
+
+
+  rectangle "== SwatStockConsole\n&lt;size:12&gt;[container]&lt;/size&gt;" &lt;&lt;container_boundary&gt;&gt;&lt;&lt;boundary&gt;&gt; as swatstock  {
+      rectangle "== Program\n//&lt;size:12&gt;[C#]&lt;/size&gt;//\n\nEntry point" &lt;&lt;component&gt;&gt; as Program
+      rectangle "== Client\n//&lt;size:12&gt;[C#]&lt;/size&gt;//\n\nRetrieves stock data" &lt;&lt;component&gt;&gt; as Client
+      rectangle "== AlphaVantageApiService\n//&lt;size:12&gt;[C#]&lt;/size&gt;//\n\nFetches API data" &lt;&lt;component&gt;&gt; as AlphaVantageA ...
+      rectangle "== ChartService\n//&lt;size:12&gt;[C#]&lt;/size&gt;//\n\nGenerates charts" &lt;&lt;component&gt;&gt; as ChartService
+      rectangle "== JsonUtility\n//&lt;size:12&gt;[C#]&lt;/size&gt;//\n\nHandles JSON processing" &lt;&lt;component&gt;&gt; as JsonUtility
+
+    Interface(IAlphaVantageApiService, "IAlphaVantageApiService")
+^^^^^
+ Syntax Error? (Assumed diagram type: component)
+
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+Container_Boundary(swatstock, "SwatStockConsole") {
+    Component(Program, "Program", "C#", "Entry point")
+    Component(Client, "Client", "C#", "Retrieves stock data")
+    Component(AlphaVantageApiService, "AlphaVantageApiService", "C#", "Fetches API data")
+    Component(ChartService, "ChartService", "C#", "Generates charts")
+    Component(JsonUtility, "JsonUtility", "C#", "Handles JSON processing")
+
+    Interface(IAlphaVantageApiService, "IAlphaVantageApiService")
+    Interface(IChartService, "IChartService")
+
+    Rel_D(Program, Client, "Uses")
+    Rel_D(Client, IAlphaVantageApiService, "Uses")
+    Rel_U(AlphaVantageApiService, IAlphaVantageApiService, "Implements")
+    Rel_D(AlphaVantageApiService, JsonUtility, "Uses")
+    Rel_D(Program, ChartService, "Uses")
+    Rel_U(ChartService, IChartService, "Implements")
+}
+@enduml</pre>
 </div>
 </div>
 </div>
@@ -544,14 +599,14 @@ and displays it as candlestick charts in the console.</p>
 The diagrams are created using DeepSeek AI to analyze the code structure.</p>
 </div>
 <div class="paragraph">
-<p>Last generated: 2025-04-24T11:59:19.927Z</p>
+<p>Last generated: 2025-04-24T12:08:44.558Z</p>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-04-24 11:59:19 UTC
+Last updated 2025-04-24 12:08:44 UTC
 </div>
 </div>
 </body>

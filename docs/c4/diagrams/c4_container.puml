@@ -3,20 +3,22 @@
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
 
-System_Boundary(swat, "SwatStockConsole") {
-    Container(console, "Console Application", "C#", "Handles user interaction and coordination")
-    Container(api, "API Service", "C#", "Retrieves stock data from Alpha Vantage API")
-    Container(chart, "Chart Service", "C#", "Generates visual stock charts")
-    Container(models, "Data Models", "C#", "Defines data structures (DailyPriceData, APIData)")
-    Container(utils, "Utilities", "C#", "Provides JSON parsing (JsonUtility)")
+LAYOUT_WITH_LEGEND()
+
+System_Boundary(c1, "SwatStockConsole") {
+    Container(console, "Console Application", "C#", "Handles user interaction and coordinates data retrieval/display")    
+    Container(api, "API Service", "C#", "AlphaVantageApiService", "Retrieves stock data from external API")
+    Container(chart, "Chart Service", "C#", "ChartService", "Generates stock charts and visualizations")
+    Container(models, "Data Models", "C#", "DailyPriceData, APIData", "Defines data structures for stock information")
+    Container(utils, "Utilities", "C#", "JsonUtility", "Provides JSON serialization/deserialization helpers")
 }
 
-System_Ext(alpha, "Alpha Vantage API", "External stock data provider")
+System_Ext(alpha_vantage, "Alpha Vantage API", "External stock data API")
 
-Rel(console, api, "Uses to fetch data", "HTTP")
-Rel(api, alpha, "Makes API calls to", "REST API")
-Rel(api, utils, "Uses for JSON processing", "JSON Utility")
-Rel(console, chart, "Requests charts from", "")
-Rel(chart, models, "Uses data models", "")
-Rel(api, models, "Stores data in", "")
+Rel(console, api, "Uses", "HTTP")
+Rel(console, chart, "Uses", "SDK")
+Rel(api, alpha_vantage, "Calls", "REST API")
+Rel(api, utils, "Uses", "JSON serialization")
+Rel(api, models, "Returns", "Stock data objects")
+Rel(chart, models, "Uses", "Data visualization")
 @enduml

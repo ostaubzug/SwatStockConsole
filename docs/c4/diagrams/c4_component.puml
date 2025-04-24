@@ -1,28 +1,23 @@
 @startuml
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
-!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
 
-title Component Diagram for SwatStockConsole
+Container_Boundary(swatstock, "SwatStockConsole") {
+    Component(Program, "Program", "C#", "Entry point")
+    Component(Client, "Client", "C#", "Retrieves stock data")
+    Component(AlphaVantageApiService, "AlphaVantageApiService", "C#", "Fetches API data")
+    Component(ChartService, "ChartService", "C#", "Generates charts")
+    Component(JsonUtility, "JsonUtility", "C#", "Handles JSON processing")
+    
+    Interface(IAlphaVantageApiService, "IAlphaVantageApiService")
+    Interface(IChartService, "IChartService")
 
-Container(console, "SwatStockConsole", "C# Console Application", "A console application for retrieving and displaying stock data") {
-
-    Component(program, "Program", "C# Class", "Main entry point")
-    Component(client, "Client", "C# Class", "Orchestrates data retrieval and display")
-    Component(av_service, "AlphaVantageApiService", "C# Class", "Retrieves stock data from Alpha Vantage API")
-    Component(chart_service, "ChartService", "C# Class", "Generates stock price charts")
-    Component(json_util, "JsonUtility", "C# Class", "Provides JSON serialization/deserialization")
-
-    Component(iav, "IAlphaVantageApiService", "Interface", "Defines API data retrieval methods")
-    Component(ichart, "IChartService", "Interface", "Defines chart generation methods")
-
-    program --> client : uses
-    client --> iav : depends on
-    client --> ichart : depends on
-    av_service ..|> iav : implements
-    chart_service ..|> ichart : implements
-    av_service --> json_util : uses
-    chart_service --> json_util : uses
+    Rel_D(Program, Client, "Uses")
+    Rel_D(Client, IAlphaVantageApiService, "Uses")
+    Rel_U(AlphaVantageApiService, IAlphaVantageApiService, "Implements")
+    Rel_D(AlphaVantageApiService, JsonUtility, "Uses")
+    Rel_D(Program, ChartService, "Uses")
+    Rel_U(ChartService, IChartService, "Implements")
 }
-
 @enduml
