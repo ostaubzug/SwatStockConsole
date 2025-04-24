@@ -477,7 +477,7 @@ The diagrams are automatically generated based on code analysis using DeepSeek A
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="c4-context-diagram.svg" alt="c4 context diagram" width="472" height="383">
+<img src="c4-context-diagram.svg" alt="c4 context diagram" width="263" height="573">
 </div>
 </div>
 </div>
@@ -486,37 +486,9 @@ The diagrams are automatically generated based on code analysis using DeepSeek A
 <div class="paragraph">
 <p>The Container diagram shows the major components within the SwatStockConsole system.</p>
 </div>
-<div class="listingblock">
+<div class="imageblock">
 <div class="content">
-<pre>Failed to generate image: PlantUML preprocessing failed: [From &lt;input&gt; (line 2) ]
-
-@startuml
-!include C4_Context.puml
-^^^^^
- cannot include C4_Context.puml
-
-@startuml
-!include C4_Context.puml
-
-System_Boundary(SwatStockConsole, "SwatStockConsole") {
-    Container(console, "Console Application", "C#", "Handles user interaction and coordination")
-    Container(api_service, "API Service", "C#", "AlphaVantageApiService\nRetrieves stock data from external API")
-    Container(chart_service, "Chart Service", "C#", "Generates visual stock charts")
-    Container(models, "Data Models", "C#", "DailyPriceData, APIData\nStock data structures")
-    Container(utilities, "Utilities", "C#", "JsonUtility\nJSON serialization helpers")
-}
-
-System_Ext(alpha_vantage, "Alpha Vantage API", "REST API")
-
-Rel(console, api_service, "Uses", "HTTP requests")
-Rel(api_service, alpha_vantage, "Calls", "REST API (JSON)")
-Rel(api_service, utilities, "Uses", "JSON parsing")
-Rel(api_service, models, "Populates", "")
-Rel(console, chart_service, "Uses", "Chart generation")
-Rel(chart_service, models, "Reads", "Chart data")
-Rel(console, models, "Displays", "Stock information")
-
-@enduml</pre>
+<img src="c4-container-diagram.svg" alt="c4 container diagram" width="708" height="645">
 </div>
 </div>
 </div>
@@ -525,70 +497,9 @@ Rel(console, models, "Displays", "Stock information")
 <div class="paragraph">
 <p>The Component diagram shows the internal components of the SwatStockConsole application.</p>
 </div>
-<div class="listingblock">
+<div class="imageblock">
 <div class="content">
-<pre>Failed to generate image: PlantUML preprocessing failed: [From &lt;input&gt; (line 11) ]
-
-@startuml
-
-
-
-
-...
-... ( skipping 545 lines )
-...
-
-
-
-
-
-
-
-
-
-
-
-
-title Component Diagram for SwatStockConsole
-
-  rectangle "== SwatStockConsole\n//&lt;size:12&gt;[C# Console Application]&lt;/size&gt;//\n\nA console application for retrieving a ...
-
-      rectangle "== Program\n//&lt;size:12&gt;[C#]&lt;/size&gt;//\n\nEntry point and orchestration" &lt;&lt;component&gt;&gt; as Program
-      rectangle "== Client\n//&lt;size:12&gt;[C#]&lt;/size&gt;//\n\nHandles user interactions and data presentation" &lt;&lt;component&gt;&gt; a ...
-      rectangle "== AlphaVantageApiService\n//&lt;size:12&gt;[C#]&lt;/size&gt;//\n\nRetrieves stock data from AlphaVantage API" &lt;&lt;co ...
-        Interface(IAlphaVantageApiService, "IAlphaVantageApiService")
-^^^^^
- Syntax Error? (Assumed diagram type: component)
-
-@startuml
-!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
-
-title Component Diagram for SwatStockConsole
-
-Container(swatstock, "SwatStockConsole", "C# Console Application", "A console application for retrieving and displaying stock data") {
-
-    Component(Program, "Program", "C#", "Entry point and orchestration")
-    Component(Client, "Client", "C#", "Handles user interactions and data presentation")
-    Component(AlphaVantageApiService, "AlphaVantageApiService", "C#", "Retrieves stock data from AlphaVantage API") {
-        Interface(IAlphaVantageApiService, "IAlphaVantageApiService")
-    }
-    Component(ChartService, "ChartService", "C#", "Generates stock charts from data") {
-        Interface(IChartService, "IChartService")
-    }
-    Component(JsonUtility, "JsonUtility", "C#", "Provides JSON serialization/deserialization utilities")
-}
-
-System_Ext(alpha_vantage, "AlphaVantage API", "External stock data API")
-
-Rel(Program, Client, "Uses", "")
-Rel(Client, IAlphaVantageApiService, "Uses", "HTTP requests")
-Rel(Client, IChartService, "Uses", "Chart generation")
-Rel_D(AlphaVantageApiService, IAlphaVantageApiService, "Implements")
-Rel_D(ChartService, IChartService, "Implements")
-Rel(AlphaVantageApiService, alpha_vantage, "Fetches data from", "HTTP API")
-Rel(AlphaVantageApiService, JsonUtility, "Uses for JSON parsing", "")
-Rel(ChartService, JsonUtility, "Uses for JSON parsing", "")
-@enduml</pre>
+<img src="c4-component-diagram.svg" alt="c4 component diagram" width="771" height="643">
 </div>
 </div>
 </div>
@@ -633,14 +544,14 @@ and displays it as candlestick charts in the console.</p>
 The diagrams are created using DeepSeek AI to analyze the code structure.</p>
 </div>
 <div class="paragraph">
-<p>Last generated: 2025-04-24T11:45:32.329Z</p>
+<p>Last generated: 2025-04-24T11:59:19.927Z</p>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-04-24 11:45:32 UTC
+Last updated 2025-04-24 11:59:19 UTC
 </div>
 </div>
 </body>

@@ -1,29 +1,28 @@
 @startuml
-!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
 
 title Component Diagram for SwatStockConsole
 
-Container(swatstock, "SwatStockConsole", "C# Console Application", "A console application for retrieving and displaying stock data") {
+Container(console, "SwatStockConsole", "C# Console Application", "A console application for retrieving and displaying stock data") {
 
-    Component(Program, "Program", "C#", "Entry point and orchestration")
-    Component(Client, "Client", "C#", "Handles user interactions and data presentation")
-    Component(AlphaVantageApiService, "AlphaVantageApiService", "C#", "Retrieves stock data from AlphaVantage API") {
-        Interface(IAlphaVantageApiService, "IAlphaVantageApiService")
-    }
-    Component(ChartService, "ChartService", "C#", "Generates stock charts from data") {
-        Interface(IChartService, "IChartService")
-    }
-    Component(JsonUtility, "JsonUtility", "C#", "Provides JSON serialization/deserialization utilities")
+    Component(program, "Program", "C# Class", "Main entry point")
+    Component(client, "Client", "C# Class", "Orchestrates data retrieval and display")
+    Component(av_service, "AlphaVantageApiService", "C# Class", "Retrieves stock data from Alpha Vantage API")
+    Component(chart_service, "ChartService", "C# Class", "Generates stock price charts")
+    Component(json_util, "JsonUtility", "C# Class", "Provides JSON serialization/deserialization")
+
+    Component(iav, "IAlphaVantageApiService", "Interface", "Defines API data retrieval methods")
+    Component(ichart, "IChartService", "Interface", "Defines chart generation methods")
+
+    program --> client : uses
+    client --> iav : depends on
+    client --> ichart : depends on
+    av_service ..|> iav : implements
+    chart_service ..|> ichart : implements
+    av_service --> json_util : uses
+    chart_service --> json_util : uses
 }
 
-System_Ext(alpha_vantage, "AlphaVantage API", "External stock data API")
-
-Rel(Program, Client, "Uses", "")
-Rel(Client, IAlphaVantageApiService, "Uses", "HTTP requests")
-Rel(Client, IChartService, "Uses", "Chart generation")
-Rel_D(AlphaVantageApiService, IAlphaVantageApiService, "Implements")
-Rel_D(ChartService, IChartService, "Implements")
-Rel(AlphaVantageApiService, alpha_vantage, "Fetches data from", "HTTP API")
-Rel(AlphaVantageApiService, JsonUtility, "Uses for JSON parsing", "")
-Rel(ChartService, JsonUtility, "Uses for JSON parsing", "")
 @enduml

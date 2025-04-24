@@ -1,22 +1,22 @@
 @startuml
-!include C4_Context.puml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
 
-System_Boundary(SwatStockConsole, "SwatStockConsole") {
+System_Boundary(swat, "SwatStockConsole") {
     Container(console, "Console Application", "C#", "Handles user interaction and coordination")
-    Container(api_service, "API Service", "C#", "AlphaVantageApiService\nRetrieves stock data from external API")
-    Container(chart_service, "Chart Service", "C#", "Generates visual stock charts")
-    Container(models, "Data Models", "C#", "DailyPriceData, APIData\nStock data structures")
-    Container(utilities, "Utilities", "C#", "JsonUtility\nJSON serialization helpers")
+    Container(api, "API Service", "C#", "Retrieves stock data from Alpha Vantage API")
+    Container(chart, "Chart Service", "C#", "Generates visual stock charts")
+    Container(models, "Data Models", "C#", "Defines data structures (DailyPriceData, APIData)")
+    Container(utils, "Utilities", "C#", "Provides JSON parsing (JsonUtility)")
 }
 
-System_Ext(alpha_vantage, "Alpha Vantage API", "REST API")
+System_Ext(alpha, "Alpha Vantage API", "External stock data provider")
 
-Rel(console, api_service, "Uses", "HTTP requests")
-Rel(api_service, alpha_vantage, "Calls", "REST API (JSON)")
-Rel(api_service, utilities, "Uses", "JSON parsing")
-Rel(api_service, models, "Populates", "")
-Rel(console, chart_service, "Uses", "Chart generation")
-Rel(chart_service, models, "Reads", "Chart data")
-Rel(console, models, "Displays", "Stock information")
-
+Rel(console, api, "Uses to fetch data", "HTTP")
+Rel(api, alpha, "Makes API calls to", "REST API")
+Rel(api, utils, "Uses for JSON processing", "JSON Utility")
+Rel(console, chart, "Requests charts from", "")
+Rel(chart, models, "Uses data models", "")
+Rel(api, models, "Stores data in", "")
 @enduml
