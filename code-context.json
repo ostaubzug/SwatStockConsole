@@ -1,0 +1,96 @@
+{
+  "projectName": "SwatStockConsole",
+  "files": [
+    {
+      "path": "DailyPriceData.cs",
+      "size": 215,
+      "content": "",
+      "previewFound": false
+    },
+    {
+      "path": "AlphaVantageApiService.cs",
+      "size": 1364,
+      "content": "",
+      "previewFound": false
+    },
+    {
+      "path": "ChartService.cs",
+      "size": 4458,
+      "content": "",
+      "previewFound": false
+    },
+    {
+      "path": "IAlphaVantageApiService.cs",
+      "size": 589,
+      "content": "",
+      "previewFound": false
+    },
+    {
+      "path": "IChartService.cs",
+      "size": 322,
+      "content": "",
+      "previewFound": false
+    },
+    {
+      "path": "JsonUtility.cs",
+      "size": 2448,
+      "content": "",
+      "previewFound": false
+    },
+    {
+      "path": "Client.cs",
+      "size": 1135,
+      "content": "",
+      "previewFound": false
+    },
+    {
+      "path": "Program.cs",
+      "size": 1308,
+      "content": "",
+      "previewFound": false
+    },
+    {
+      "path": "AlphaVantageApiServiceTest.cs",
+      "size": 8163,
+      "content": "",
+      "previewFound": false
+    },
+    {
+      "path": "ChartServiceTest.cs",
+      "size": 629,
+      "content": "",
+      "previewFound": false
+    },
+    {
+      "path": "APIData.cs",
+      "size": 3117,
+      "content": "",
+      "previewFound": false
+    },
+    {
+      "path": "ClientTest.cs",
+      "size": 2313,
+      "content": "",
+      "previewFound": false
+    },
+    {
+      "path": "EnvironmentTest.cs",
+      "size": 1591,
+      "content": "",
+      "previewFound": false
+    },
+    {
+      "path": "HttpClientFactoryMock.cs",
+      "size": 2310,
+      "content": "",
+      "previewFound": false
+    },
+    {
+      "path": "JsonUtilityTest.cs",
+      "size": 4969,
+      "content": "",
+      "previewFound": false
+    }
+  ],
+  "description": "A console application for retrieving and displaying stock data"
+}
