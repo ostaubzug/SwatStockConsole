@@ -147,7 +147,7 @@ jobs:
                 messages: [
                   {
                     role: "system", 
-                    content: "You are an expert software architect who specializes in creating C4 model diagrams using PlantUML syntax. Analyze the provided code context and generate accurate, well-structured diagrams that follow C4 model conventions."
+                    content: "You are an expert software architect who specializes in creating C4 model diagrams using PlantUML syntax. Always use the official C4-PlantUML macros (Component(), Interface(), Rel(), Container_Boundary(), etc.) instead of custom PlantUML syntax. Pay special attention to proper C4-PlantUML syntax for interfaces and relationships. Be extremely careful to generate valid PlantUML code that will render correctly."
                   },
                   { role: "user", content: prompt }
                 ],
@@ -270,9 +270,32 @@ jobs:
               case 'Container':
                 prompt += "Create a Container diagram showing the main components within the SwatStockConsole application. Include the API service, chart service, models, utilities, and console application containers and how they interact.";
                 break;
+              
               case 'Component':
-                prompt += "Create a Component diagram detailing the internal components of the SwatStockConsole application, showing interfaces, implementations, and their relationships.";
-                break;
+                prompt += "Create a Component diagram detailing the internal components of the SwatStockConsole application, showing interfaces, implementations, and their relationships.\n\n";
+                prompt += "IMPORTANT: Follow these strict guidelines for C4 Component diagrams:\n";
+                prompt += "1. Always use the official C4-PlantUML macros instead of custom PlantUML syntax:\n";
+                prompt += "   - Use Component() for components\n";
+                prompt += "   - Use Interface() for interfaces\n";
+                prompt += "   - Use Rel(), Rel_D(), Rel_U(), Rel_L(), Rel_R() for relationships\n";
+                prompt += "   - Use Container_Boundary() for boundaries\n\n";
+                prompt += "2. Structure your PlantUML as follows:\n";
+                prompt += "```\n";
+                prompt += "@startuml\n";
+                prompt += "!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml\n\n";
+                prompt += "Container_Boundary(container, \"Container Name\") {\n";
+                prompt += "    Component(comp1, \"Component 1\", \"Technology\", \"Description\")\n";
+                prompt += "    Component(comp2, \"Component 2\", \"Technology\", \"Description\")\n";
+                prompt += "    Interface(interface1, \"Interface Name\")\n";
+                prompt += "    \n";
+                prompt += "    Rel(comp1, interface1, \"Uses\")\n";
+                prompt += "    Rel(comp2, interface1, \"Implements\")\n";
+                prompt += "}\n";
+                prompt += "@enduml\n";
+                prompt += "```\n\n";
+                prompt += "DO NOT use rectangle elements or custom stereotypes. ONLY use the official C4-PlantUML macros.";
+                break;    
+              
               case 'Code':
                 prompt += "Create a detailed Code diagram showing key classes, interfaces, and their relationships within the SwatStockConsole application.";
                 break;

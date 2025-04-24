@@ -16,6 +16,11 @@ You can get your API Key here: https://www.alphavantage.co/support/#api-key
 
 Make sure the file is getting copied to the output directory.
 
+## AI generated Documentation
+The Github Pages are deploayed here:
+https://ostaubzug.github.io/SwatStockConsole/c4_documentation.html
+
+
 ## Git
 Wir nutzen den main und develop branch.
 
