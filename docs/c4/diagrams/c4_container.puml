@@ -3,22 +3,28 @@
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
 
-LAYOUT_WITH_LEGEND()
+title Container Diagram for SwatStockConsole
 
-System_Boundary(c1, "SwatStockConsole") {
-    Container(console, "Console Application", "C#", "Handles user interaction and coordinates data retrieval/display")    
-    Container(api, "API Service", "C#", "AlphaVantageApiService", "Retrieves stock data from external API")
-    Container(chart, "Chart Service", "C#", "ChartService", "Generates stock charts and visualizations")
-    Container(models, "Data Models", "C#", "DailyPriceData, APIData", "Defines data structures for stock information")
-    Container(utils, "Utilities", "C#", "JsonUtility", "Provides JSON serialization/deserialization helpers")
+Person(user, "User", "Interacts with the console application")
+
+Container(console_app, "SwatStockConsole", "C# Console Application", "Retrieves and displays stock data") {
+    Component(client, "Client", "C# Class", "Handles user interaction and flow control")
+    Component(api_service, "AlphaVantageApiService", "C# Class", "Retrieves stock data from external API")
+    Component(chart_service, "ChartService", "C# Class", "Generates stock charts for visualization")
+    Component(models, "Models", "C# Classes", "Data structures (DailyPriceData, APIData)")
+    Component(json_util, "JsonUtility", "C# Class", "Provides JSON serialization/deserialization")
 }
 
 System_Ext(alpha_vantage, "Alpha Vantage API", "External stock data API")
 
-Rel(console, api, "Uses", "HTTP")
-Rel(console, chart, "Uses", "SDK")
-Rel(api, alpha_vantage, "Calls", "REST API")
-Rel(api, utils, "Uses", "JSON serialization")
-Rel(api, models, "Returns", "Stock data objects")
-Rel(chart, models, "Uses", "Data visualization")
+Rel(user, client, "Uses", "CLI")
+Rel(client, api_service, "Requests stock data", "HTTP")
+Rel(api_service, alpha_vantage, "Calls", "HTTPS/REST")
+Rel(api_service, json_util, "Uses for JSON parsing", "")
+Rel(api_service, models, "Stores retrieved data", "")
+Rel(client, chart_service, "Requests chart generation", "")
+Rel(chart_service, models, "Reads chart data", "")
+Rel(chart_service, json_util, "Uses for data formatting", "")
+Rel(client, models, "Displays processed data", "")
+
 @enduml

@@ -3,11 +3,13 @@
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
 
-Person(analyst, "Stock Analyst", "Uses the console application to retrieve and analyze stock data")
-System(swat_stock, "SwatStockConsole", "Console application for retrieving and displaying stock data")
-System_Ext(alpha_vantage, "Alpha Vantage API", "Third-party financial market data API")
+Person(stock_analyst, "Stock Analyst", "Uses the console application to access stock data")
 
-Rel(analyst, swat_stock, "Uses", "CLI")
-Rel(swat_stock, alpha_vantage, "Retrieves stock data", "API requests")
+System(swat_stock_console, "SwatStockConsole", "A console application for retrieving and displaying stock data")
+
+System_Ext(alpha_vantage, "Alpha Vantage API", "External API for real-time and historical stock data")
+
+Rel(stock_analyst, swat_stock_console, "Uses")
+Rel(swat_stock_console, alpha_vantage, "Retrieves stock data using", "HTTP")
 
 @enduml
