@@ -9,6 +9,7 @@
 
 temp_processing/
 temp_project_structure.md
+.asciidoctor/
 
 # User-specific files
 *.rsuser
