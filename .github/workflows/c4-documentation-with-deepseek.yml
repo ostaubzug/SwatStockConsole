@@ -1,14 +1,6 @@
 name: C4 Documentation Generator with DeepSeek
 
 on:
-  push:
-    branches: [ "main", "develop" ]
-    paths:
-      - '**.cs'
-      - 'StockConsole/**'
-      - 'TestStockConsole/**'
-      - '.github/workflows/c4-documentation.yml'
-  # Allow manual triggering
   workflow_dispatch:
 
 permissions:
@@ -227,134 +219,120 @@ jobs:
             }
           }
           
-          // Generate AsciiDoc file
           function generateAsciiDoc() {
-            const asciidocContent = `= SwatStockConsole C4 Architecture Documentation
-:toc: left
-:toclevels: 3
-:sectnums:
-:plantuml-format: svg
-:plantuml-server-url: https://www.plantuml.com/plantuml
-  
-  == Introduction
-  
-  This document provides the C4 model architecture documentation for the SwatStockConsole application.
-  The diagrams are automatically generated based on code analysis using DeepSeek AI.
-  
-  == C4 Model
+            // Build AsciiDoc content using string concatenation to avoid YAML parsing issues
+            let asciidocContent = "";
+            asciidocContent += "= SwatStockConsole C4 Architecture Documentation\n\n";
+            asciidocContent += ":toc: left\n";
+            asciidocContent += ":toclevels: 3\n";
+            asciidocContent += ":sectnums:\n";
+            asciidocContent += ":plantuml-format: svg\n\n";
+          
+            asciidocContent += "== Introduction\n\n";
+            asciidocContent += "This document provides the C4 model architecture documentation for the SwatStockConsole application.\n";
+            asciidocContent += "The diagrams are automatically generated based on code analysis using DeepSeek AI.\n\n";
+          
+            asciidocContent += "== C4 Model\n\n";
+            asciidocContent += "The C4 model is a simple way to document software architecture using four levels:\n\n";
+            asciidocContent += "1. System Context: People and software systems\n";
+            asciidocContent += "2. Containers: Applications and data stores\n";
+            asciidocContent += "3. Components: Groups of related functionality\n";
+            asciidocContent += "4. Code: Classes, interfaces, etc.\n\n";
+          
+            asciidocContent += "=== System Context Diagram\n\n";
+            asciidocContent += "The System Context diagram shows the SwatStockConsole system in context with its users and external dependencies.\n\n";
+            asciidocContent += "[plantuml, \"c4-context-diagram\", svg]\n";
+            asciidocContent += "....\n";
+            asciidocContent += "include::diagrams/c4_context.puml[]\n";
+            asciidocContent += "....\n\n";
+          
+            asciidocContent += "=== Container Diagram\n\n";
+            asciidocContent += "The Container diagram shows the major components within the SwatStockConsole system.\n\n";
+            asciidocContent += "[plantuml, \"c4-container-diagram\", svg]\n";
+            asciidocContent += "....\n";
+            asciidocContent += "include::diagrams/c4_container.puml[]\n";
+            asciidocContent += "....\n\n";
+          
+            asciidocContent += "=== Component Diagram\n\n";
+            asciidocContent += "The Component diagram shows the internal components of the SwatStockConsole application.\n\n";
+            asciidocContent += "[plantuml, \"c4-component-diagram\", svg]\n";
+            asciidocContent += "....\n";
+            asciidocContent += "include::diagrams/c4_component.puml[]\n";
+            asciidocContent += "....\n\n";
+          
+            asciidocContent += "== Implementation Details\n\n";
+            asciidocContent += "The SwatStockConsole application is a .NET console application that retrieves stock data from Alpha Vantage API\n";
+            asciidocContent += "and displays it as candlestick charts in the console.\n\n";
+          
+            asciidocContent += "=== Key Components\n\n";
+            asciidocContent += "- AlphaVantageApiService: Handles communication with the Alpha Vantage API\n";
+            asciidocContent += "- ChartService: Renders ASCII-based candlestick charts\n";
+            asciidocContent += "- JsonUtility: Parses JSON responses from the API\n";
+            asciidocContent += "- Client: Orchestrates the application flow\n";
+            asciidocContent += "- DailyPriceData: Data model for daily stock price information\n\n";
+          
+            asciidocContent += "== Maintenance\n\n";
+            asciidocContent += "This documentation is automatically generated from the codebase and updated on every commit.\n";
+            asciidocContent += "The diagrams are created using DeepSeek AI to analyze the code structure.\n\n";
+          
+            asciidocContent += "Last generated: " + new Date().toISOString();
+          
+            fs.writeFileSync('docs/c4/c4_documentation.adoc', asciidocContent);
+            console.log('AsciiDoc file generated: docs/c4/c4_documentation.adoc');
+          }
+          
+          // Start generation
+          generateAllDiagrams();
+          EOF
 
-The C4 model is a simple way to document software architecture using four levels:
-
-1. *System Context*: People and software systems
-2. *Containers*: Applications and data stores
-3. *Components*: Groups of related functionality
-4. *Code*: Classes, interfaces, etc.
-  
-  === System Context Diagram
-  
-  The System Context diagram shows the SwatStockConsole system in context with its users and external dependencies.
-  
-  [plantuml, "c4-context-diagram", svg]
-  ....
-  include::diagrams/c4_context.puml[]
-  ....
-  
-  === Container Diagram
-  
-  The Container diagram shows the major components within the SwatStockConsole system.
-  
-  [plantuml, "c4-container-diagram", svg]
-  ....
-  include::diagrams/c4_container.puml[]
-  ....
-  
-  === Component Diagram
-  
-  The Component diagram shows the internal components of the SwatStockConsole application.
-  
-  [plantuml, "c4-component-diagram", svg]
-  ....
-  include::diagrams/c4_component.puml[]
-  ....
-  
-  == Implementation Details
-  
-  The SwatStockConsole application is a .NET console application that retrieves stock data from Alpha Vantage API
-  and displays it as candlestick charts in the console.
-  
-  === Key Components
-  
-  * *AlphaVantageApiService*: Handles communication with the Alpha Vantage API
-  * *ChartService*: Renders ASCII-based candlestick charts
-  * *JsonUtility*: Parses JSON responses from the API
-  * *Client*: Orchestrates the application flow
-  * *DailyPriceData*: Data model for daily stock price information
-  
-  == Maintenance
-  
-  This documentation is automatically generated from the codebase and updated on every commit.
-  The diagrams are created using DeepSeek AI to analyze the code structure.
-
-Last generated: ${new Date().toISOString()}
-  `;
-  
-  fs.writeFileSync('docs/c4/c4_documentation.adoc', asciidocContent);
-console.log('AsciiDoc file generated: docs/c4/c4_documentation.adoc');
-}
-  
-  // Start generation
-  generateAllDiagrams();
-  EOF
-  
-  node generate-c4-diagrams.js
-
-- name: Generate HTML documentation
-  run: |
-    asciidoctor -r asciidoctor-diagram -D docs/c4/html docs/c4/c4_documentation.adoc
-    echo "HTML documentation generated"
-
-- name: Create branch for documentation update
-  id: create-branch
-  run: |
-    BRANCH_NAME="docs/c4-update-$(date +%Y%m%d%H%M%S)"
-    git config --global user.name 'GitHub Actions'
-    git config --global user.email 'actions@github.com'
-    git checkout -b $BRANCH_NAME
-    echo "branch_name=$BRANCH_NAME" >> $GITHUB_OUTPUT
-
-- name: Commit documentation changes
-  id: commit
-  run: |
-    git add docs/c4/
-    # Only commit if there are changes
-    if git diff --staged --quiet; then
-      echo "No changes to commit"
-      echo "has_changes=false" >> $GITHUB_OUTPUT
-    else
-      git commit -m "Update C4 documentation [skip ci]"
-      echo "has_changes=true" >> $GITHUB_OUTPUT
-    fi
-
-- name: Push changes
-  if: steps.commit.outputs.has_changes == 'true'
-  run: git push origin ${{ steps.create-branch.outputs.branch_name }}
-
-- name: Create Pull Request
-  if: steps.commit.outputs.has_changes == 'true'
-  uses: peter-evans/create-pull-request@v5
-  with:
-    token: ${{ secrets.GITHUB_TOKEN }}
-    branch: ${{ steps.create-branch.outputs.branch_name }}
-    base: main
-    title: "Update C4 documentation"
-    body: |
-      This PR updates the C4 architecture documentation based on recent code changes.
       
-      The documentation was automatically generated using DeepSeek AI to analyze the codebase structure.
-      
-      ## Changes
-      - Updated System Context diagram
-      - Updated Container diagram
-      - Updated Component diagram
-      - Generated AsciiDoc and HTML documentation
-    labels: "documentation,automated"
+      - name: Generate HTML documentation
+        run: |
+          asciidoctor -r asciidoctor-diagram -D docs/c4/html docs/c4/c4_documentation.adoc
+          echo "HTML documentation generated"
+
+      - name: Create branch for documentation update
+        id: create-branch
+        run: |
+          BRANCH_NAME="docs/c4-update-$(date +%Y%m%d%H%M%S)"
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'actions@github.com'
+          git checkout -b $BRANCH_NAME
+          echo "branch_name=$BRANCH_NAME" >> $GITHUB_OUTPUT
+
+      - name: Commit documentation changes
+        id: commit
+        run: |
+          git add docs/c4/
+          # Only commit if there are changes
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          else
+            git commit -m "Update C4 documentation [skip ci]"
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Push changes
+        if: steps.commit.outputs.has_changes == 'true'
+        run: git push origin ${{ steps.create-branch.outputs.branch_name }}
+
+      - name: Create Pull Request
+        if: steps.commit.outputs.has_changes == 'true'
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ steps.create-branch.outputs.branch_name }}
+          base: main
+          title: "Update C4 documentation"
+          body: |
+            This PR updates the C4 architecture documentation based on recent code changes.
+            
+            The documentation was automatically generated using DeepSeek AI to analyze the codebase structure.
+            
+            ## Changes
+            - Updated System Context diagram
+            - Updated Container diagram
+            - Updated Component diagram
+            - Generated AsciiDoc and HTML documentation
+          labels: "documentation,automated"
