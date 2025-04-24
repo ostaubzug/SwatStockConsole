@@ -1,0 +1,67 @@
+= SwatStockConsole C4 Architecture Documentation
+
+:toc: left
+:toclevels: 3
+:sectnums:
+:plantuml-format: svg
+
+== Introduction
+
+This document provides the C4 model architecture documentation for the SwatStockConsole application.
+The diagrams are automatically generated based on code analysis using DeepSeek AI.
+
+== C4 Model
+
+The C4 model is a simple way to document software architecture using four levels:
+
+1. System Context: People and software systems
+2. Containers: Applications and data stores
+3. Components: Groups of related functionality
+4. Code: Classes, interfaces, etc.
+
+=== System Context Diagram
+
+The System Context diagram shows the SwatStockConsole system in context with its users and external dependencies.
+
+[plantuml, "c4-context-diagram", svg]
+....
+include::diagrams/c4_context.puml[]
+....
+
+=== Container Diagram
+
+The Container diagram shows the major components within the SwatStockConsole system.
+
+[plantuml, "c4-container-diagram", svg]
+....
+include::diagrams/c4_container.puml[]
+....
+
+=== Component Diagram
+
+The Component diagram shows the internal components of the SwatStockConsole application.
+
+[plantuml, "c4-component-diagram", svg]
+....
+include::diagrams/c4_component.puml[]
+....
+
+== Implementation Details
+
+The SwatStockConsole application is a .NET console application that retrieves stock data from Alpha Vantage API
+and displays it as candlestick charts in the console.
+
+=== Key Components
+
+- AlphaVantageApiService: Handles communication with the Alpha Vantage API
+- ChartService: Renders ASCII-based candlestick charts
+- JsonUtility: Parses JSON responses from the API
+- Client: Orchestrates the application flow
+- DailyPriceData: Data model for daily stock price information
+
+== Maintenance
+
+This documentation is automatically generated from the codebase.
+The diagrams are created using DeepSeek AI to analyze the code structure.
+
+Last generated: 2025-04-24T11:45:32.329Z

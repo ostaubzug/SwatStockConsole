@@ -1,0 +1,10 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+Person(stock_analyst, "Stock Analyst", "Views and analyzes stock market data")
+System(swat_stock, "SwatStockConsole", "Console application for retrieving and displaying stock data")
+System_Ext(alpha_vantage, "Alpha Vantage API", "External stock market data API")
+
+Rel_U(stock_analyst, swat_stock, "Uses to view stock data")
+Rel_D(swat_stock, alpha_vantage, "Retrieves stock data via API", "HTTPS")
+@enduml
