@@ -64,4 +64,4 @@ and displays it as candlestick charts in the console.
 This documentation is automatically generated from the codebase.
 The diagrams are created using DeepSeek AI to analyze the code structure.
 
-Last generated: 2025-04-24T12:08:44.558Z
+Last generated: 2025-04-24T12:53:35.481Z

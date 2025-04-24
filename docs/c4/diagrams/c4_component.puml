@@ -1,23 +1,23 @@
 @startuml
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
-!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
 
 Container_Boundary(swatstock, "SwatStockConsole") {
-    Component(Program, "Program", "C#", "Entry point")
-    Component(Client, "Client", "C#", "Retrieves stock data")
-    Component(AlphaVantageApiService, "AlphaVantageApiService", "C#", "Fetches API data")
-    Component(ChartService, "ChartService", "C#", "Generates charts")
-    Component(JsonUtility, "JsonUtility", "C#", "Handles JSON processing")
-    
-    Interface(IAlphaVantageApiService, "IAlphaVantageApiService")
-    Interface(IChartService, "IChartService")
+    Component(Program, "Program", "C#", "Main entry point\nOrchestrates data flow")
+    Component(Client, "Client", "C#", "Handles API communication")
+    Component(AlphaVantageApiService, "AlphaVantageApiService", "C#", "Implements API client\nfor stock data retrieval")
+    Interface(IApiService, "IAlphaVantageApiService")
+    Component(ChartService, "ChartService", "C#", "Generates stock charts\nfrom processed data")
+    Interface(IChart, "IChartService")
+    Component(JsonUtility, "JsonUtility", "C#", "Handles JSON\nserialization/deserialization")
 
-    Rel_D(Program, Client, "Uses")
-    Rel_D(Client, IAlphaVantageApiService, "Uses")
-    Rel_U(AlphaVantageApiService, IAlphaVantageApiService, "Implements")
-    Rel_D(AlphaVantageApiService, JsonUtility, "Uses")
-    Rel_D(Program, ChartService, "Uses")
-    Rel_U(ChartService, IChartService, "Implements")
+    Rel(Program, Client, "Uses")
+    Rel(Client, IApiService, "Uses")
+    Rel(AlphaVantageApiService, IApiService, "Implements")
+    Rel(AlphaVantageApiService, JsonUtility, "Uses\nfor JSON parsing")
+    Rel(Program, ChartService, "Uses")
+    Rel(ChartService, IChart, "Implements")
+    Rel(ChartService, JsonUtility, "Uses\nfor data formatting")
 }
 @enduml
