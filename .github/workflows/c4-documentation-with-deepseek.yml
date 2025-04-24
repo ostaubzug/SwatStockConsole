@@ -406,4 +406,3 @@ jobs:
             - Updated Container diagram
             - Updated Component diagram
             - Generated AsciiDoc and HTML documentation
-          labels: "documentation,automated"
