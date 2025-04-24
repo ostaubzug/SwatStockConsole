@@ -1,0 +1,29 @@
+@startuml
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+title Component Diagram for SwatStockConsole
+
+Container(swatstock, "SwatStockConsole", "C# Console Application", "A console application for retrieving and displaying stock data") {
+
+    Component(Program, "Program", "C#", "Entry point and orchestration")
+    Component(Client, "Client", "C#", "Handles user interactions and data presentation")
+    Component(AlphaVantageApiService, "AlphaVantageApiService", "C#", "Retrieves stock data from AlphaVantage API") {
+        Interface(IAlphaVantageApiService, "IAlphaVantageApiService")
+    }
+    Component(ChartService, "ChartService", "C#", "Generates stock charts from data") {
+        Interface(IChartService, "IChartService")
+    }
+    Component(JsonUtility, "JsonUtility", "C#", "Provides JSON serialization/deserialization utilities")
+}
+
+System_Ext(alpha_vantage, "AlphaVantage API", "External stock data API")
+
+Rel(Program, Client, "Uses", "")
+Rel(Client, IAlphaVantageApiService, "Uses", "HTTP requests")
+Rel(Client, IChartService, "Uses", "Chart generation")
+Rel_D(AlphaVantageApiService, IAlphaVantageApiService, "Implements")
+Rel_D(ChartService, IChartService, "Implements")
+Rel(AlphaVantageApiService, alpha_vantage, "Fetches data from", "HTTP API")
+Rel(AlphaVantageApiService, JsonUtility, "Uses for JSON parsing", "")
+Rel(ChartService, JsonUtility, "Uses for JSON parsing", "")
+@enduml

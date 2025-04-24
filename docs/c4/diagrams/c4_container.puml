@@ -1,0 +1,22 @@
+@startuml
+!include C4_Context.puml
+
+System_Boundary(SwatStockConsole, "SwatStockConsole") {
+    Container(console, "Console Application", "C#", "Handles user interaction and coordination")
+    Container(api_service, "API Service", "C#", "AlphaVantageApiService\nRetrieves stock data from external API")
+    Container(chart_service, "Chart Service", "C#", "Generates visual stock charts")
+    Container(models, "Data Models", "C#", "DailyPriceData, APIData\nStock data structures")
+    Container(utilities, "Utilities", "C#", "JsonUtility\nJSON serialization helpers")
+}
+
+System_Ext(alpha_vantage, "Alpha Vantage API", "REST API")
+
+Rel(console, api_service, "Uses", "HTTP requests")
+Rel(api_service, alpha_vantage, "Calls", "REST API (JSON)")
+Rel(api_service, utilities, "Uses", "JSON parsing")
+Rel(api_service, models, "Populates", "")
+Rel(console, chart_service, "Uses", "Chart generation")
+Rel(chart_service, models, "Reads", "Chart data")
+Rel(console, models, "Displays", "Stock information")
+
+@enduml
