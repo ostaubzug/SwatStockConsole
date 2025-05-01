@@ -492,74 +492,17 @@ The diagrams are automatically generated based on code analysis using DeepSeek A
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_component_diagram">2.3. Component Diagram</h3>
-<div class="paragraph">
-<p>The Component diagram shows the internal components of the SwatStockConsole application.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>Failed to generate image: PlantUML preprocessing failed: [From &lt;input&gt; (line 10) ]
-
-@startuml
-
-
-
-
-...
-... ( skipping 1641 lines )
-...
-
-skinparam rectangle&lt;&lt;external_component&gt;&gt; {𝟎    StereotypeFontColor #000000𝟎    FontColor #000000𝟎    BackgroundColor #C ...
-
-
-
-
-
-
-
-
-
-
-
-
-
-  rectangle "== SwatStockConsole\n&lt;size:12&gt;[container]&lt;/size&gt;" &lt;&lt;container_boundary&gt;&gt;&lt;&lt;boundary&gt;&gt; as swatstock  {
-      rectangle "== Program\n//&lt;size:12&gt;[C#]&lt;/size&gt;//\n\nMain entry point\nOrchestrates data flow" &lt;&lt;component&gt;&gt; as Prog ...
-      rectangle "== Client\n//&lt;size:12&gt;[C#]&lt;/size&gt;//\n\nHandles API communication" &lt;&lt;component&gt;&gt; as Client
-      rectangle "== AlphaVantageApiService\n//&lt;size:12&gt;[C#]&lt;/size&gt;//\n\nImplements API client\nfor stock data retrieval" ...
-    Interface(IApiService, "IAlphaVantageApiService")
-^^^^^
- Syntax Error? (Assumed diagram type: component)
-
-@startuml
-!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
-!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
-!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
-
-Container_Boundary(swatstock, "SwatStockConsole") {
-    Component(Program, "Program", "C#", "Main entry point\nOrchestrates data flow")
-    Component(Client, "Client", "C#", "Handles API communication")
-    Component(AlphaVantageApiService, "AlphaVantageApiService", "C#", "Implements API client\nfor stock data retrieval")
-    Interface(IApiService, "IAlphaVantageApiService")
-    Component(ChartService, "ChartService", "C#", "Generates stock charts\nfrom processed data")
-    Interface(IChart, "IChartService")
-    Component(JsonUtility, "JsonUtility", "C#", "Handles JSON\nserialization/deserialization")
-
-    Rel(Program, Client, "Uses")
-    Rel(Client, IApiService, "Uses")
-    Rel(AlphaVantageApiService, IApiService, "Implements")
-    Rel(AlphaVantageApiService, JsonUtility, "Uses\nfor JSON parsing")
-    Rel(Program, ChartService, "Uses")
-    Rel(ChartService, IChart, "Implements")
-    Rel(ChartService, JsonUtility, "Uses\nfor data formatting")
-}
-@enduml</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
+    <div class="sect2">
+        <h3 id="_component_diagram">2.3. Component Diagram</h3>
+        <div class="paragraph">
+            <p>The Component diagram shows the internal components of the SwatStockConsole application.</p>
+        </div>
+        <div class="imageblock">
+            <div class="content">
+                <img src="c4-component-diagram.svg" alt="c4 component diagram">
+            </div>
+        </div>
+    </div>
 <div class="sect1">
 <h2 id="_implementation_details">3. Implementation Details</h2>
 <div class="sectionbody">
