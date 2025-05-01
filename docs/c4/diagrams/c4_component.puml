@@ -1,7 +1,6 @@
 @startuml
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
-!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
 
 Container_Boundary(swatstock, "SwatStockConsole") {
     Component(Program, "Program", "C#", "Main entry point\nOrchestrates data flow")
@@ -14,10 +13,10 @@ Container_Boundary(swatstock, "SwatStockConsole") {
 
     Rel(Program, Client, "Uses")
     Rel(Client, IApiService, "Uses")
-    Rel(AlphaVantageApiService, IApiService, "Implements")
+    Rel(IApiService, AlphaVantageApiService, "Is implemented by")
     Rel(AlphaVantageApiService, JsonUtility, "Uses\nfor JSON parsing")
     Rel(Program, ChartService, "Uses")
-    Rel(ChartService, IChart, "Implements")
+    Rel(IChart, ChartService, "Is implemented by")
     Rel(ChartService, JsonUtility, "Uses\nfor data formatting")
 }
 @enduml
