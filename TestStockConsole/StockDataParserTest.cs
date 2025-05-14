@@ -5,8 +5,8 @@ using StockConsole.Utility;
 namespace TestStockConsole;
 
 [TestClass]
-[TestSubject(typeof(JsonUtility))]
-public class JsonUtilityTest
+[TestSubject(typeof(StockDataParser))]
+public class StockDataParserTest
 {
     [TestCategory("ContinuousIntegration")]
     [TestMethod]
@@ -27,7 +27,7 @@ public class JsonUtilityTest
             }
         }";
         
-        decimal price = JsonUtility.ExtractLatestPrice(validJson);
+        decimal price = StockDataParser.GetCurrentPrice(validJson);
         
         Assert.AreEqual(221.53m, price);
     }
@@ -40,7 +40,7 @@ public class JsonUtilityTest
         string invalidJson = @"{
             ""WrongProperty"": {}
         }";
-        JsonUtility.ExtractLatestPrice(invalidJson);
+        StockDataParser.GetCurrentPrice(invalidJson);
     }
     
     [TestCategory("ContinuousIntegration")]
@@ -55,7 +55,7 @@ public class JsonUtilityTest
                 ""missing price property"": ""value""
             }
         }";
-        JsonUtility.ExtractLatestPrice(invalidJson);
+        StockDataParser.GetCurrentPrice(invalidJson);
     }
     
     [TestCategory("ContinuousIntegration")]
@@ -95,7 +95,7 @@ public class JsonUtilityTest
             }
         }";
         
-        var priceDataList = JsonUtility.ExtractAllPricesLastXDays(validJson, 3);
+        var priceDataList = StockDataParser.GetRecentDailyPrices(validJson, 3);
         
         Assert.AreEqual(3, priceDataList.Count);
         
@@ -132,6 +132,6 @@ public class JsonUtilityTest
             ""Wrong Property"": {}
         }";
         
-        JsonUtility.ExtractAllPricesLastXDays(invalidJson, 3);
+        StockDataParser.GetRecentDailyPrices(invalidJson, 3);
     }
 }

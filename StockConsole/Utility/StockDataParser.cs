@@ -3,9 +3,9 @@ using StockConsole.Model;
 
 namespace StockConsole.Utility;
 
-public static class JsonUtility
+public static class StockDataParser
 {
-    public static decimal ExtractLatestPrice(string json)
+    public static decimal GetCurrentPrice(string json)
     {
         using JsonDocument document = JsonDocument.Parse(json);
 
@@ -19,7 +19,7 @@ public static class JsonUtility
         return decimal.Parse(priceString);
     }
 
-    public static List<DailyPriceData> ExtractAllPricesLastXDays(string json, int numberOfDays)
+    public static List<DailyPriceData> GetRecentDailyPrices(string json, int numberOfDays)
     {
         var result = new List<DailyPriceData>();
         using JsonDocument document = JsonDocument.Parse(json);

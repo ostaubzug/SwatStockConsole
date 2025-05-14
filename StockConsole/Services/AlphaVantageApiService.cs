@@ -13,13 +13,13 @@ public class AlphaVantageApiService(IHttpClientFactory clientFactory, IConfigura
     public async Task<decimal> GetMostRecentPrice(string symbol)
     {
         var json = await FetchApi(_apiUrl,"GLOBAL_QUOTE", _apiKey, symbol);
-        return JsonUtility.ExtractLatestPrice(json);
+        return StockDataParser.GetCurrentPrice(json);
     }
     
     public async Task<List<DailyPriceData>> GetTimeSeries(string symbol, int days)
     {
         var json = await FetchApi(_apiUrl,"TIME_SERIES_DAILY", _apiKey, symbol);
-        return JsonUtility.ExtractAllPricesLastXDays(json,days);
+        return StockDataParser.GetRecentDailyPrices(json,days);
     }
 
     private async Task<string> FetchApi(string url, string function, string apiKey, string symbol)

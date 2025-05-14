@@ -15,7 +15,7 @@ public class ChartServiceTest
     public void CreateChart()
     {
         var service = new ChartService();
-        var priceData = JsonUtility.ExtractAllPricesLastXDays(ApiData.ValidTimeSeriesJson, 7);
+        var priceData = StockDataParser.GetRecentDailyPrices(ApiData.ValidTimeSeriesJson, 7);
         var result = service.RenderCandlestickChart(priceData);
         Assert.AreEqual(File.ReadAllText("ServicesTest/chart.txt"),result);
     }
